@@ -1,9 +1,6 @@
 import {Component, inject, signal} from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {Task1Component} from './tasks/task1/task1.component';
-import {Task2Component} from './tasks/task2/task2.component';
-import {Task3Component} from './tasks/task3/task3.component';
 import {MatListItem, MatNavList} from '@angular/material/list';
 import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {filter, map, mergeMap, tap} from 'rxjs';
@@ -14,9 +11,6 @@ import {filter, map, mergeMap, tap} from 'rxjs';
   imports: [
     MatExpansionModule,
     MatTabsModule,
-    Task1Component,
-    Task2Component,
-    Task3Component,
     MatListItem,
     RouterLink,
     MatNavList,
