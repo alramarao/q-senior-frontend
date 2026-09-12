@@ -1,9 +1,6 @@
-export interface PagingFilter {
-  skip?: number;
-  limit?: number;
-}
+import { PaginationFilter } from './pagination-filter';
 
-export interface SecuritiesFilter extends PagingFilter {
+export interface SecuritiesFilter extends PaginationFilter {
   name?: string;
   types?: string[];
   currencies?: string[];
