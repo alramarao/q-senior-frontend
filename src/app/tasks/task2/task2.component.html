@@ -6,8 +6,9 @@
 <cdk-virtual-scroll-viewport itemSize="40">
   <div class="row" *cdkVirtualFor="let row of rows(); trackBy: trackBy;">
     <mat-checkbox
-      [checked]="selectionModel.isSelected(row)"
-      (change)="selectionModel.toggle(row)">
+      [aria-label]="row.title"
+      [checked]="selectionModel.isSelected(row.id)"
+      (change)="selectionModel.toggle(row.id)">
     </mat-checkbox>
     <span>{{ row.title }}</span>
   </div>

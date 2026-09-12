@@ -1,4 +1,4 @@
-import {Component, signal, TrackByFunction} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, TrackByFunction} from '@angular/core';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
@@ -25,11 +25,13 @@ function createRows(): Row[] {
   standalone: true,
   templateUrl: './task2.component.html',
   styleUrls: ['./task2.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Task2Component {
   rows = signal<Row[]>(createRows())
 
-  selectionModel = new SelectionModel<Row>(true, undefined, undefined, (o1, o2) => o1.id === o2.id)
+  // Stable IDs preserve selection across recreation and avoid comparator-based scans.
+  selectionModel = new SelectionModel<number>(true)
   trackBy: TrackByFunction<Row> | undefined = (index, item) => item.id;
 
   recreateData() {
@@ -37,10 +39,10 @@ export class Task2Component {
   }
 
   selectAll() {
-    this.selectionModel.select(...this.rows())
+    this.selectionModel.select(...this.rows().map(row => row.id))
   }
 
   deselectAll() {
-    this.selectionModel.deselect(...this.rows())
+    this.selectionModel.clear()
   }
 }
