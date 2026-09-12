@@ -35,8 +35,6 @@ export class FilterableTableComponent<T> implements AfterContentInit {
 
   @ViewChild(MatTable, { static: true }) table?: MatTable<T>;
 
-  @Input() columns: string[] = [];
-
   @Input() dataSource:
     | readonly T[]
     | DataSource<T>

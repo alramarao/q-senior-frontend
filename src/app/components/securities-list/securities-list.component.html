@@ -1,29 +1,50 @@
-<filterable-table
-  class="security-list"
-  [dataSource]="securities$ | async"
-  [isLoading]="loadingSecurities$ | async"
->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let security">{{ security.name }}</td>
-  </ng-container>
+@if (securitiesState$ | async; as securitiesState) {
+  <filterable-table
+    class="security-list"
+    [dataSource]="securitiesState.rows"
+    [isLoading]="securitiesState.isLoading"
+  >
+    <app-filter-bar tableFilters [fields]="fields" (filterChange)="onFilterChange($event)"></app-filter-bar>
 
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef>Type</th>
-    <td mat-cell *matCellDef="let security">{{ security.type }}</td>
-  </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let security">{{ security.name }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="currency">
-    <th mat-header-cell *matHeaderCellDef>Currency</th>
-    <td mat-cell *matCellDef="let security">{{ security.currency }}</td>
-  </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let security">{{ security.type }}</td>
+    </ng-container>
 
-  <!-- Custom row definitions to be provided to the wrapper table. -->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef>Currency</th>
+      <td mat-cell *matCellDef="let security">{{ security.currency }}</td>
+    </ng-container>
 
-  <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
-  <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" colspan="3"><i>No data</i></td>
-  </tr>
-</filterable-table>
+    <!-- Custom row definitions to be provided to the wrapper table. -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="3"><span>{{ securitiesState.isLoading ? 'Loading…' : securitiesState.hasError ? 'Could not load securities.' : 'No matching securities.' }}</span></td>
+    </tr>
+  </filterable-table>
+
+  @if (securitiesState.hasError) {
+    <div role="alert">Could not load securities. <button mat-button (click)="onRetry()">Retry</button></div>
+  }
+  <div class="pagination" role="group" aria-label="Pagination">
+    <mat-form-field>
+      <mat-label>Rows per page</mat-label>
+      <mat-select [value]="securitiesQuerySubject.value.limit" (selectionChange)="onPageSizeChange($event.value)">
+        @for (size of [10, 25, 50]; track size) {
+          <mat-option [value]="size">{{ size }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <span aria-live="polite">Page {{ securitiesQuerySubject.value.skip / securitiesQuerySubject.value.limit + 1 }}</span>
+    <button mat-button [disabled]="securitiesState.isLoading || securitiesQuerySubject.value.skip === 0" (click)="onPageChange(-1)">Previous</button>
+    <button mat-button [disabled]="securitiesState.isLoading || !securitiesState.hasNext" (click)="onPageChange(1)">Next</button>
+  </div>
+}

@@ -1,0 +1,28 @@
+<div class="filters" role="group" aria-label="Filters">
+  @for (field of fields; track field.key) {
+    <mat-form-field>
+      <mat-label>{{ field.label }}</mat-label>
+      @switch (field.kind) {
+        @case ('text') {
+          <input matInput [formControl]="controls[field.key]" (input)="onFilterChange(true)">
+        }
+        @case ('multi-select') {
+          <mat-select multiple [formControl]="controls[field.key]" (selectionChange)="onFilterChange()">
+            <mat-select-trigger>{{ selectedValueLabel(field) }}</mat-select-trigger>
+            @for (option of field.options; track option.value) {
+              <mat-option [value]="option.value">{{ option.label }}</mat-option>
+            }
+          </mat-select>
+        }
+        @case ('boolean') {
+          <mat-select placeholder="All" [formControl]="controls[field.key]" (selectionChange)="onFilterChange()">
+            <mat-option [value]="null">All</mat-option>
+            <mat-option [value]="true">{{ field.trueLabel ?? 'Yes' }}</mat-option>
+            <mat-option [value]="false">{{ field.falseLabel ?? 'No' }}</mat-option>
+          </mat-select>
+        }
+      }
+    </mat-form-field>
+  }
+  <button mat-button type="button" (click)="onClear()">Clear filters</button>
+</div>

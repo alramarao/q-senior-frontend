@@ -1,12 +1,9 @@
-<!-- Feel free to replace this placeholder with your filterbar -->
-<fieldset class="filter-bar-placeholder">
-  <legend>Filter bar should go here</legend>
-</fieldset>
+<ng-content select="[tableFilters]"></ng-content>
 
-<div class="table-wrapper">
+<div class="table-wrapper" [attr.aria-busy]="isLoading">
   @if (isLoading) {
     <div class="loading-indicator">
-      <mat-spinner></mat-spinner>
+      <mat-spinner aria-label="Loading data"></mat-spinner>
     </div>
   }
 
