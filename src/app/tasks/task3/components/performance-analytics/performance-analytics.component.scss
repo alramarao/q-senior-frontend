@@ -1,0 +1,132 @@
+:host {
+  display: block;
+  min-width: 0;
+
+  .heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+  }
+  dt {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 24px;
+  }
+  .summary > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  dd {
+    order: -1;
+    margin: 0;
+    font-size: clamp(16px, 1.5vw, 22px);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+    margin: 20px auto;
+  }
+  text {
+    font-family: inherit;
+    font-size: 12px;
+    fill: var(--muted);
+  }
+  .grid {
+    stroke: var(--border);
+  }
+  .trend {
+    stroke: var(--green);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linejoin: round;
+  }
+  circle {
+    fill: var(--green);
+    stroke: #fff;
+    stroke-width: 2;
+  }
+  .latest {
+    fill: var(--green);
+    font-weight: 600;
+  }
+  .trend-summary {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 16px 0 8px;
+  }
+  .note {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  @media (max-width: 1150px) {
+    .summary {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 500px) {
+    text {
+      font-size: 15px;
+    }
+  }
+
+  .title-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .title-line mat-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    flex: 0 0 24px;
+    color: var(--muted);
+  }
+
+  .period {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px;
+    margin-left: auto;
+    background: #f0f3ed;
+    border-radius: 5px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .period span,
+  .period s {
+    padding: 5px 8px;
+    border-radius: 3px;
+  }
+  .period .period-current {
+    color: #fff;
+    background: var(--green);
+    font-weight: 500;
+    font-size: inherit;
+  }
+  .period s {
+    color: var(--muted);
+    text-decoration-thickness: 1px;
+  }
+}

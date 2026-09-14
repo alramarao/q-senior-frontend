@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  min-width: 0;
+  height: 100%;
+
+  .card {
+    box-sizing: border-box;
+    height: 100%;
+    padding: var(--widget-padding, 24px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    box-shadow: 0 2px 6px #20312d03;
+  }
+}

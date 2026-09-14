@@ -1,0 +1,90 @@
+:host {
+  display: block;
+  min-width: 0;
+
+  header {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 32px;
+    align-items: center;
+    padding: var(--widget-padding, 24px);
+    background: #192d29;
+    color: #f5f3e9;
+    border: 1px solid #192d29;
+    border-radius: 7px;
+  }
+  p,
+  figure {
+    margin: 0;
+  }
+  .identity,
+  figure {
+    min-width: 0;
+  }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #c4ccc7;
+  }
+  .artist {
+    margin-top: 24px;
+    font-size: 18px;
+  }
+  h1 {
+    font:
+      400 clamp(36px, 4vw, 58px)/1.1 Georgia,
+      serif;
+    margin: 8px 0 12px;
+  }
+  .medium {
+    color: #c4ccc7;
+    font-size: 14px;
+  }
+  .valuation {
+    border-top: 1px solid #49605a;
+    padding-top: 22px;
+    margin-top: 24px;
+  }
+  .value {
+    font:
+      400 clamp(32px, 3.5vw, 48px)/1.2 Georgia,
+      serif;
+    margin: 10px 0;
+  }
+  .change {
+    color: #a4dbb6;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .change span {
+    font-weight: 400;
+  }
+  .note,
+  figcaption {
+    font-size: 11px;
+    color: #c4ccc7;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 320px;
+    object-fit: contain;
+    object-position: right center;
+  }
+  figcaption {
+    text-align: right;
+  }
+  @media (max-width: 700px) {
+    header {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .artist {
+      margin-top: 16px;
+    }
+  }
+}

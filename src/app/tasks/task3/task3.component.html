@@ -1,1 +1,15 @@
-<img src="monet.png" height="auto" width="100%"/>
+<main aria-label="Collectible asset dashboard">
+    <app-asset-header [asset]="asset" [summary]="summary" />
+    <app-asset-metrics [asset]="asset" [summary]="summary" />
+  <div class="analysis-grid">
+    <app-dashboard-card>
+      <app-asset-details [asset]="asset" [acquisition]="summary.acquisitionValue" />
+    </app-dashboard-card>
+    <app-dashboard-card>
+      <app-performance-analytics [analytics]="analytics" />
+    </app-dashboard-card>
+  </div>
+  <app-dashboard-card>
+    <app-transaction-history [transactions]="transactions" />
+  </app-dashboard-card>
+</main>
