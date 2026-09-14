@@ -1,0 +1,44 @@
+<div class="metrics" role="group" aria-label="Key asset metrics">
+  <app-dashboard-card>
+    <p>
+      <mat-icon aria-hidden="true">payments</mat-icon>
+      Acquisition cost
+    </p>
+    <strong>{{ summary.acquisitionValue | currency: 'EUR' : 'symbol' : '1.0-0' }}</strong>
+    <span>{{ asset.acquired | date: 'd MMM yyyy' : 'UTC' }}</span>
+  </app-dashboard-card>
+  <app-dashboard-card>
+    <p>
+      <mat-icon aria-hidden="true">trending_up</mat-icon>
+      Value change
+    </p>
+    <strong class="positive">
+      {{ summary.gain >= 0 ? '+' : '' }}{{ summary.gain | currency: 'EUR' : 'symbol' : '1.0-0' }}
+    </strong>
+    <span>{{ summary.growth >= 0 ? '+' : '' }}{{ summary.growth | percent: '1.1-1' }}</span>
+  </app-dashboard-card>
+  <app-dashboard-card>
+    <p>
+      <mat-icon aria-hidden="true">insights</mat-icon>
+      Annual growth (CAGR)
+    </p>
+    <strong>{{ summary.cagr | percent: '1.1-1' }}</strong>
+    <span>{{ summary.startYear }} — {{ summary.endYear }}</span>
+  </app-dashboard-card>
+  <app-dashboard-card>
+    <p>
+      <mat-icon aria-hidden="true">palette</mat-icon>
+      Asset category
+    </p>
+    <strong>{{ asset.category }}</strong>
+    <span>{{ asset.medium }}</span>
+  </app-dashboard-card>
+  <app-dashboard-card>
+    <p>
+      <mat-icon aria-hidden="true">verified_user</mat-icon>
+      Condition
+    </p>
+    <strong>{{ asset.condition }}</strong>
+    <span>Illustrative assessment</span>
+  </app-dashboard-card>
+</div>

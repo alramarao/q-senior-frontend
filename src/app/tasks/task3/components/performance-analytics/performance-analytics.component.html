@@ -1,0 +1,100 @@
+<section aria-labelledby="analytics-title">
+  <div class="heading">
+    <div class="title-line">
+      <mat-icon aria-hidden="true">show_chart</mat-icon>
+      <h2 id="analytics-title">Value Appreciation History</h2>
+    </div>
+    <div
+      class="period"
+      role="group"
+      aria-label="Displayed period: all available history. Five-year and one-year views are unavailable."
+    >
+      <span class="period-current">ALL</span>
+      <s title="Five-year view unavailable">5Y</s>
+      <s title="One-year view unavailable">1Y</s>
+    </div>
+  </div>
+  <dl class="summary">
+    <div>
+      <dt>Current value</dt>
+      <dd>{{ analytics.summary.current | currency: 'EUR' : 'symbol' : '1.0-0' }}</dd>
+    </div>
+    <div>
+      <dt>Total appreciation</dt>
+      <dd>
+        {{ analytics.summary.growth >= 0 ? '+' : ''
+        }}{{ analytics.summary.growth | percent: '1.1-1' }}
+      </dd>
+    </div>
+    <div>
+      <dt>Value change</dt>
+      <dd>
+        {{ analytics.summary.gain >= 0 ? '+' : ''
+        }}{{ analytics.summary.gain | currency: 'EUR' : 'symbol' : '1.0-0' }}
+      </dd>
+    </div>
+    <div>
+      <dt>Annual growth</dt>
+      <dd>{{ analytics.summary.cagr | percent: '1.1-1' }}</dd>
+    </div>
+  </dl>
+  @if (analytics.chart; as plot) {
+    <svg [attr.viewBox]="plot.viewBox" role="img" aria-labelledby="chart-title chart-description">
+      <title id="chart-title">Estimated value over time</title>
+      <desc id="chart-description">
+        Illustrative annual valuations from
+        {{ analytics.summary.acquisitionValue | currency: 'EUR' : 'symbol' : '1.0-0' }} in
+        {{ analytics.summary.startYear }} to
+        {{ analytics.summary.current | currency: 'EUR' : 'symbol' : '1.0-0' }} in
+        {{ analytics.summary.endYear }}. Total change
+        {{ analytics.summary.growth | percent: '1.1-1' }}. Scale starts at
+        {{ plot.min | currency: 'EUR' : 'symbol' : '1.0-0' }}.
+      </desc>
+      <defs>
+        <linearGradient id="roche-chart-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#246748" stop-opacity=".2" />
+          <stop offset="100%" stop-color="#246748" stop-opacity=".02" />
+        </linearGradient>
+      </defs>
+      @for (tick of plot.ticks; track tick.value) {
+        <line
+          [attr.x1]="plot.bounds.left"
+          [attr.x2]="plot.bounds.right"
+          [attr.y1]="tick.y"
+          [attr.y2]="tick.y"
+          class="grid"
+        />
+        <text [attr.x]="plot.tickLabelX" [attr.y]="tick.labelY" text-anchor="end">
+          {{ tick.value / 1000 | currency: 'EUR' : 'symbol' : '1.0-3' }}k
+        </text>
+      }
+      <polygon [attr.points]="plot.area" fill="url(#roche-chart-fill)" />
+      <polyline [attr.points]="plot.line" class="trend" />
+      @for (point of plot.points; track point.year; let latest = $last) {
+        <circle [attr.cx]="point.x" [attr.cy]="point.y" [attr.r]="latest ? 6 : 4.5">
+          <title>
+            {{ point.year }}: {{ point.value | currency: 'EUR' : 'symbol' : '1.0-0' }}
+          </title>
+        </circle>
+        @if (latest) {
+          <text [attr.x]="point.x" [attr.y]="point.labelY" text-anchor="end" class="latest">
+            {{ point.value | currency: 'EUR' : 'symbol' : '1.0-0' }}
+          </text>
+        }
+        <text [attr.x]="point.x" [attr.y]="plot.yearLabelY" text-anchor="middle">
+          {{ point.year }}
+        </text>
+      }
+    </svg>
+  }
+  <p class="trend-summary">
+    Estimated value changed by {{ analytics.summary.growth >= 0 ? '+' : ''
+    }}{{ analytics.summary.growth | percent: '1.1-1' }} over {{ analytics.summary.years }} years,
+    reaching {{ analytics.summary.current | currency: 'EUR' : 'symbol' : '1.0-0' }} in
+    {{ analytics.summary.endYear }}.
+  </p>
+  <p class="note">
+    Annual illustrative appraisals · EUR · Non-zero vertical baseline · Excludes fees and holding
+    costs.
+  </p>
+</section>

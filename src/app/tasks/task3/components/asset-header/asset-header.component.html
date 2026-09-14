@@ -1,0 +1,28 @@
+<header aria-labelledby="asset-title">
+  <div class="identity">
+    <p class="eyebrow">Private collection / {{ asset.category }}</p>
+    <p class="artist">{{ asset.artist }}</p>
+    <h1 id="asset-title">{{ asset.title }}</h1>
+    <p class="medium">{{ asset.medium }} · {{ asset.period }}</p>
+    <div class="valuation">
+      <p class="eyebrow">Current estimated value</p>
+      <p class="value" data-testid="current-value">
+        {{ summary.current | currency: 'EUR' : 'symbol' : '1.0-0' }}
+      </p>
+      <p class="change">
+        {{ summary.growth >= 0 ? '+' : '' }}{{ summary.growth | percent: '1.1-1' }}
+        <span>since acquisition</span>
+      </p>
+      <p class="note">Illustrative valuation · {{ summary.endYear }} · EUR</p>
+    </div>
+  </div>
+  <figure>
+    <img
+      [src]="asset.image"
+      [width]="asset.imageWidth"
+      [height]="asset.imageHeight"
+      [alt]="asset.imageAlt"
+    />
+    <figcaption>{{ asset.artist }} · {{ asset.title }}</figcaption>
+  </figure>
+</header>

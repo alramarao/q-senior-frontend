@@ -1,0 +1,46 @@
+<section aria-labelledby="transactions-title">
+  <div class="heading">
+    <div class="title-line">
+      <mat-icon aria-hidden="true">receipt_long</mat-icon>
+      <h2 id="transactions-title">Comparable Transaction History</h2>
+    </div>
+    <span>{{ transactions.length }} comparable works</span>
+  </div>
+  <div
+    class="table-scroll"
+    tabindex="0"
+    role="region"
+    aria-label="Comparable transactions; scroll for more records, or horizontally on small screens"
+  >
+    <table>
+      <caption>
+        Illustrative sales of similar paintings, not transactions of this artwork. Values in EUR.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Comparable work</th>
+          <th scope="col">Date</th>
+          <th scope="col">Type / event</th>
+          <th scope="col">Sale price</th>
+          <th scope="col">Location / venue</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (sale of transactions; track sale.id) {
+          <tr>
+            <th scope="row">{{ sale.work }}</th>
+            <td>{{ sale.date | date: 'd MMM yyyy' : 'UTC' }}</td>
+            <td>
+              <span class="event">{{ sale.event }}</span>
+            </td>
+            <td class="price">{{ sale.value | currency: 'EUR' : 'symbol' : '1.0-0' }}</td>
+            <td>{{ sale.venue }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    Illustrative portfolio: valuations, acquisition and comparable transactions are test data.
+  </p>
+</section>

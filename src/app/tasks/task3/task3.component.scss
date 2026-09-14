@@ -1,0 +1,43 @@
+:host {
+  --ink: #20312d;
+  --muted: #56635e;
+  --green: #246748;
+  --border: #e1e5de;
+  --surface: #fff;
+  --widget-padding: 24px;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+  padding: 32px;
+  background: #f7f6f2;
+  color: var(--ink);
+
+  main {
+    display: grid;
+    gap: 24px;
+    width: 100%;
+    min-width: 0;
+  }
+  .analysis-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .analysis-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    & {
+      padding: 20px 16px;
+      --widget-padding: 18px 16px;
+    }
+    main,
+    .analysis-grid {
+      gap: 16px;
+    }
+  }
+}
